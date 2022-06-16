@@ -4,10 +4,26 @@ STOP_WORDS = [
     'will', 'with'
 ]
 
+def make_lowercase(file):
+    lowercase = []
+    for line in file.readlines():
+        lowercase.append(line.lower())
+    return lowercase
+
+def remove_punctuations(file):
+    removed_punctuations = []
+    for line in file:
+        removed_punct_line = line.replace(',', '').replace('.', '').replace('?', '')
+        print('line', removed_punct_line) 
+
+
 
 def print_word_freq(file):
     """Read in `file` and print out the frequency of words in that file."""
-    pass
+    with open(file) as open_file:
+        lowercase = make_lowercase(open_file)
+        removed_punctuation = remove_punctuations(lowercase)
+
 
 
 if __name__ == "__main__":
@@ -18,8 +34,8 @@ if __name__ == "__main__":
         description='Get the word frequency in a text file.')
     parser.add_argument('file', help='file to read')
     args = parser.parse_args()
-
     file = Path(args.file)
+
     if file.is_file():
         print_word_freq(file)
     else:
